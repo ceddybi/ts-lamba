@@ -1,4 +1,3 @@
-import hello from './hello-ts';
 import helloError from './hello-ts-error';
 import newrelic from 'newrelic';
 

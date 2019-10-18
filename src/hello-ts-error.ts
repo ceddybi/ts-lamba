@@ -1,4 +1,5 @@
-import addNewRelic, { NewRelicWrapper } from './utils/newrelic-lambda';
+import { NewLambdaHandler } from './utils/newrelic-lambda';
+const { setLambdaErrorHandler, startBackground }  = NewLambdaHandler;
 
 const helloTsError: Function = async () => {
   const er = new Error("Error with unsent");
@@ -9,5 +10,8 @@ const helloTsError: Function = async () => {
 // Add newrelic monitoring
 // have to put that boilerplate in your function.
 
-export default addNewRelic(NewRelicWrapper((helloTsError)));
+
+// export default addNewRelic(NewRelicWrapper((helloTsError)));
+// export default setLambdaErrorHandler(() => startBackground(helloTsError))
+export default setLambdaErrorHandler(() => startBackground(helloTsError))
 // export default addNewRelic(NewRelicWrapper(helloTsError));

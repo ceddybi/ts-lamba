@@ -6,27 +6,31 @@ export const sendNewRelicError = (error: Error) => {
     return newrelic.noticeError(error);
 }
 
-export const NewRelicWrapper = (lambdaFunc: Function): AWSLambda.Handler => async (
-    event,
-    context
-) => {
-    // Detect the keep-alive ping from CloudWatch and exit early. This keeps our
-    // lambda function running hot.
-    if (event && event.source === 'serverless-plugin-warmup') {
-        return 'pinged';
+
+export class NewLambdaHandler {
+    static setLambdaErrorHandler(lambdaFunc: Function): AWSLambda.Handler {
+        return async (event: any, context: any) => {
+            if (event && event.source === 'serverless-plugin-warmup') {
+                return 'pinged';
+            }
+
+            try {
+                return await lambdaFunc(event, context);
+            }
+            catch (error) {
+                // const customError = Object.assign({}, error);
+                // customError.message = "error with the class";
+                newrelic.noticeError(error);
+                throw error;
+            }
+        }
     }
 
-    try {
-        return await lambdaFunc(event, context);
-    }
-    catch (error) {
-        const customError = Object.assign({}, error);
-        customError.message = "newRelic custom";
-        newrelic.noticeError(customError);
-        throw error;
+    static setLambdaHandler(lambdaFunc: any) :AWSLambda.Handler{
+        return async (args: any) =>  newrelic.setLambdaHandler(lambdaFunc(args))
     }
 
-};
-
-const addNewRelic = (lambdaFunc: any): AWSLambda.Handler => async (args) => newrelic.setLambdaHandler(lambdaFunc(args));
-export default addNewRelic;
+    static startBackground(lambdaFunc: any) : Promise<any> {
+        return newrelic.startBackgroundTransaction('XXX Test transactions', lambdaFunc)
+    }
+}
