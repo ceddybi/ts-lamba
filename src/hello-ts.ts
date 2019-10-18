@@ -9,6 +9,8 @@ const helloTs: Function = async (event: AWSLambda.APIGatewayEvent) => {
     input: event,
   });
 
+  // await sendNewRelicError(new Error("Some random error"))
+
   return response;
 };
 
