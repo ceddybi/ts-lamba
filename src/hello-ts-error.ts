@@ -1,7 +1,8 @@
 import { NewLambdaHandler } from './utils/newrelic-lambda';
-const { setLambdaErrorHandler, startBackground }  = NewLambdaHandler;
+const { runNewRelicInTheBackground }  = NewLambdaHandler;
 
-const helloTsError: Function = async () => {
+const helloTsError: Function = async (args: any) => {
+  console.log('arguments from run newRelic', JSON.stringify(args))
   const er = new Error("Error with unsent");
   throw er;
 };
@@ -13,5 +14,5 @@ const helloTsError: Function = async () => {
 
 // export default addNewRelic(NewRelicWrapper((helloTsError)));
 // export default setLambdaErrorHandler(() => startBackground(helloTsError))
-export default setLambdaErrorHandler(() => startBackground(helloTsError))
+export default runNewRelicInTheBackground(helloTsError);
 // export default addNewRelic(NewRelicWrapper(helloTsError));
