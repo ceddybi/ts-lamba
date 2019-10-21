@@ -13,7 +13,7 @@ export default class NewLambdaHandler {
         event && event.source ? event.source : TEST_TRANS, // Transaction name
         async () => { // Promise to return 
           try {
-            return await lambdaFunc(event, context)
+            return await lambdaFunc(event, context);
           }
           catch (error) {
             newrelic.noticeError(error); // catch errors that escape startBackgroundTransaction handler
@@ -22,5 +22,5 @@ export default class NewLambdaHandler {
         });
     };
   }
-  
+
 }

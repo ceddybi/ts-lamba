@@ -3,6 +3,7 @@ import NewLambdaHandler from './utils/NewrelicLambda';
 
 const { runNewRelicInTheBackground } = NewLambdaHandler;
 
+// @ts-ignore
 const helloSuccess: Function = async (event: any, context: any): Promise<any> => {
   const data = successResponse({
     message: 'Go Serverless! Your function executed successfully!',
@@ -12,7 +13,7 @@ const helloSuccess: Function = async (event: any, context: any): Promise<any> =>
   // return data;
 
   // emulate an api call
-  return delayExecution(1000, data)
+  return delayExecution(3000, data)
 
 }
 

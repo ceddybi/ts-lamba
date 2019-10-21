@@ -61,7 +61,7 @@ describe('NewRelic Lambda', () => {
       } catch (error) {
         err = error;
       }
-      
+
       expect(spyNoticeError).toHaveBeenCalledTimes(1);
     });
   });
