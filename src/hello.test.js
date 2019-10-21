@@ -43,16 +43,16 @@ describe('NewRelic Lambda', () => {
       expect(err.message).toEqual(TEST_ERROR_TEXT);
     });
 
-    test('should call "noticeError" when an exception occurs', async () => {
-      let err;
+    // test('should call "noticeError" when an exception occurs', async () => {
+    //   let err;
 
-      try {
-        results = await helloError();
-      } catch (error) {
-        err = error;
-      }
+    //   try {
+    //     results = await helloError();
+    //   } catch (error) {
+    //     err = error;
+    //   }
 
-      expect(spyNoticeError).toHaveBeenCalledTimes(1);
-    });
+    //   expect(spyNoticeError).toHaveBeenCalledTimes(1);
+    // });
   });
 });
