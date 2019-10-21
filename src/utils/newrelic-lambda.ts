@@ -1,3 +1,4 @@
+import { Callback } from 'aws-lambda';
 import newrelic from 'newrelic';
 import '@newrelic/aws-sdk';
 import runWarm from './run-warm';
