@@ -1,4 +1,3 @@
-![logo](./logo.png)
 [![Greenkeeper badge](https://badges.greenkeeper.io/postlight/serverless-babel-starter.svg)](https://greenkeeper.io/)
 [![CircleCI](https://circleci.com/gh/postlight/serverless-babel-starter/tree/master.svg?style=svg)](https://circleci.com/gh/postlight/serverless-babel-starter/tree/master)
 
@@ -6,7 +5,6 @@ Modern Serverless Starter Kit adds a light layer on top of the Serverless framew
 
 Once installed, you can create and deploy functions with the latest ES6 features in minutes, with linting and formatting baked in.
 
-Read more about it in [this handy introduction](https://postlight.com/trackchanges/introducing-postlights-modern-serverless-starter-kit).
 
 Note: Currently, this starter kit specifically targets AWS.
 
@@ -17,7 +15,7 @@ Note: Currently, this starter kit specifically targets AWS.
 yarn global add serverless
 
 # Use the serverless cli to install this repo
-serverless install --url https://github.com/postlight/serverless-babel-starter --name <your-service-name>
+serverless install --url https://github.com/ceddybi/ts-lambda --name <your-service-name>
 
 # cd into project and set it up
 cd <your-service-name>

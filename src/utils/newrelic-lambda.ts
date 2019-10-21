@@ -1,6 +1,7 @@
 import { Callback } from 'aws-lambda';
 import newrelic from 'newrelic';
 import '@newrelic/aws-sdk';
+import runWarm from './run-warm';
 
 const TEST_TRANS = "TEST_TRANS"
 
@@ -25,8 +26,8 @@ export class NewLambdaHandler {
 
     static runNewRelicInTheBackground(lambdaFunc: any): AWSLambda.Handler {
         return async (event: any, context: any, callback: Callback<any>) => {
-            const withError = wrapNewRelicWithErrorHandler(lambdaFunc);
-            return withError(event, context, callback);
+            const withAll = runWarm(wrapNewRelicWithErrorHandler(lambdaFunc));
+            return withAll(event, context, callback);
         }
     }
 }
