@@ -9,10 +9,10 @@ const helloSuccess: Function = async (event: any, context: any): Promise<any> =>
     input: event,
   });
 
-  console.log('Variables from hello success', { event, context });
-
   // return data;
-  return delayExecution(3000, data)
+
+  // emulate an api call
+  return delayExecution(1000, data)
 
 }
 
