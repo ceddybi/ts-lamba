@@ -13,7 +13,7 @@ const helloSuccess: Function = async (event: any, context: any): Promise<any> =>
   // return data;
 
   // emulate an api call
-  return delayExecution(3000, data)
+  return delayExecution(1000, data)
 
 }
 
