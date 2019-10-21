@@ -3,16 +3,16 @@ import newrelic from 'newrelic';
 
 describe('hello', () => {
 
-  let startBackgroundTransaction;
+  let spyStartBackgroundTransaction;
   let spyNoticeError;
 
   beforeEach(async () => {
-    startBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
+    spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
     spyNoticeError = jest.spyOn(newrelic, 'noticeError');
   });
 
   afterEach(async () => {
-    startBackgroundTransaction.mockRestore();
+    spyStartBackgroundTransaction.mockRestore();
     spyNoticeError.mockRestore();
   });
 
@@ -27,27 +27,30 @@ describe('hello', () => {
     let err;
 
     try {
-      response = await helloError({});
+      response = await helloError({ name: 'event' });
     }
     catch (error) {
       err = error;
     }
 
-    expect(err.message).toEqual("Error with unsent");
-  });
-
-  it('should run noticeError once', async () => {
-    let response;
-    let err;
-
-    try {
-      response = await helloError({});
-    }
-    catch (error) {
-      err = error;
-    }
-
+    // expect(err.message).toEqual("Error with unsent");
     expect(spyNoticeError).toHaveBeenCalled();
+    // expect(spyStartBackgroundTransaction).toHaveBeenCalled();
+
   });
+
+  // it('should run noticeError once', async () => {
+  //   let response;
+  //   let err;
+
+  //   try {
+  //     response = await helloError({});
+  //   }
+  //   catch (error) {
+  //     err = error;
+  //   }
+
+  //   expect(spyNoticeError).toHaveBeenCalled();
+  // });
 
 });
