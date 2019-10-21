@@ -2,12 +2,13 @@ import { Callback } from 'aws-lambda';
 import newrelic from 'newrelic';
 import '@newrelic/aws-sdk';
 
+const TEST_TRANS = "TEST_TRANS"
 
 function wrapNewRelicWithErrorHandler(lambdaFunc: Function): AWSLambda.Handler {
     return async (event: any, context: any) => {
         try {
             const handler = lambdaFunc(event, context);
-            return await newrelic.startBackgroundTransaction(event ? event.source : 'XXX Test transactions', await handler);
+            return await newrelic.startBackgroundTransaction(event ? event.source : TEST_TRANS, await handler);
         }
         catch (error) {
             newrelic.noticeError(error);
