@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`NewRelic Lambda given a lambda that executes successfully should run successfully with response 1`] = `null`;
+
 exports[`hello executes as expected 1`] = `
 Object {
   "body": "{\\"message\\":\\"Go Serverless! Your function executed successfully!\\",\\"input\\":{}}",

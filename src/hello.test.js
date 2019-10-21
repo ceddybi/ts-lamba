@@ -1,56 +1,73 @@
 import helloError from './hello-ts-error';
+import helloSuccess from './hello-success';
 import newrelic from 'newrelic';
 
-describe('hello', () => {
+describe('NewRelic Lambda', () => {
 
-  let spyStartBackgroundTransaction;
-  let spyNoticeError;
+  describe('given a lambda that executes successfully', () => {
+    let spyStartBackgroundTransaction;
+    beforeEach(async () => {
+      spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
+    });
 
-  beforeEach(async () => {
-    spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
-    spyNoticeError = jest.spyOn(newrelic, 'noticeError');
-  });
+    afterEach(async () => {
+      spyStartBackgroundTransaction.mockRestore();
+    });
 
-  afterEach(async () => {
-    spyStartBackgroundTransaction.mockRestore();
-    spyNoticeError.mockRestore();
-  });
+    it('should run successfully with response', async () => {
+      const response = await helloSuccess({});
+      expect(response).toMatchSnapshot();
+    });
 
-
-  // it('executes as expected', async () => {
-  //   const response = await hello({});
-  //   expect(response).toMatchSnapshot();
-  // });
-
-  it('executes as error', async () => {
-    let response;
-    let err;
-
-    try {
-      response = await helloError({ name: 'event' });
-    }
-    catch (error) {
-      err = error;
-    }
-
-    // expect(err.message).toEqual("Error with unsent");
-    expect(spyNoticeError).toHaveBeenCalled();
-    // expect(spyStartBackgroundTransaction).toHaveBeenCalled();
+    it('should call "startBackgroundTransaction" ', async () => {
+      await helloSuccess({});
+      expect(spyStartBackgroundTransaction).toHaveBeenCalled();
+    });
 
   });
 
-  // it('should run noticeError once', async () => {
-  //   let response;
-  //   let err;
+  describe('given a lambda that executes with an exception', () => {
 
-  //   try {
-  //     response = await helloError({});
-  //   }
-  //   catch (error) {
-  //     err = error;
-  //   }
+    let spyNoticeError;
 
-  //   expect(spyNoticeError).toHaveBeenCalled();
-  // });
+    beforeEach(async () => {
+      spyNoticeError = jest.spyOn(newrelic, 'noticeError');
+    });
+
+    afterEach(async () => {
+      spyNoticeError.mockRestore();
+    });
+
+    it('should execute and throw an exception', async () => {
+      let response;
+      let err;
+
+      try {
+        response = await helloError();
+      }
+      catch (error) {
+        err = error;
+      }
+
+      expect(err.message).toEqual("Error with unsent");
+
+    });
+
+    it('should call "noticeError" when an exception occurs', async () => {
+      let response;
+      let err;
+
+      try {
+        response = await helloError();
+      }
+      catch (error) {
+        err = error;
+      }
+
+      expect(spyNoticeError).toHaveBeenCalled();
+
+    });
+
+  });
 
 });
