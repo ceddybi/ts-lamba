@@ -3,6 +3,11 @@ import helloError, { TEST_ERROR_TEXT } from './hello-error';
 import helloSuccess from './hello-success';
 
 describe('NewRelic Lambda', () => {
+
+  afterAll(async done => {
+    done();
+  });
+
   describe('given a lambda that executes successfully', () => {
     let spyStartBackgroundTransaction;
     beforeEach(async () => {
@@ -13,13 +18,13 @@ describe('NewRelic Lambda', () => {
       spyStartBackgroundTransaction.mockRestore();
     });
 
-    it('should run successfully with response', async () => {
+    test('should run successfully with response', async () => {
       const response = await helloSuccess({});
       expect(response).toMatchSnapshot();
     });
 
-    it('should call "startBackgroundTransaction" ', async () => {
-      await helloSuccess({});
+    test('should call "startBackgroundTransaction" ', async () => {
+      const results = await helloSuccess({});
       expect(spyStartBackgroundTransaction).toHaveBeenCalled();
     });
   });
@@ -35,7 +40,7 @@ describe('NewRelic Lambda', () => {
       spyNoticeError.mockRestore();
     });
 
-    it('should execute and throw an exception', async () => {
+    test('should execute and throw an exception', async () => {
       let err;
 
       try {
@@ -47,7 +52,7 @@ describe('NewRelic Lambda', () => {
       expect(err.message).toEqual(TEST_ERROR_TEXT);
     });
 
-    it('should call "noticeError" when an exception occurs', async () => {
+    test('should call "noticeError" when an exception occurs', async () => {
       let err;
 
       try {
