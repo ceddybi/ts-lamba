@@ -22,7 +22,7 @@ describe('NewRelic Lambda', () => {
   
     test('should run successfully with response', async () => {
       results = await helloSuccess({});
-      expect(result).toMatchSnapshot();
+      expect(results).toMatchSnapshot();
     });
 
     test('should call "startBackgroundTransaction" ', async () => {
