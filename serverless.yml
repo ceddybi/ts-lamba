@@ -78,13 +78,13 @@ custom:
 #    - exclude-me-dir/**
 
 functions:
-  hello-success:
+  hello:
     handler: src/hello-success.default
     events:
       - http:
           path: hello-success
           method: get
-  hello:
+  hello-error:
     handler: src/hello-error.default
     events:
       - http:
