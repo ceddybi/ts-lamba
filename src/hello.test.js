@@ -4,47 +4,40 @@ import helloSuccess from './hello-success';
 
 describe('NewRelic Lambda', () => {
 
-  afterAll(async done => {
-    done();
+  let spyStartBackgroundTransaction;
+  let spyNoticeError;
+  let results;
+
+  beforeEach(async () => {
+    spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
+    spyNoticeError = jest.spyOn(newrelic, 'noticeError');
+  });
+
+  afterEach(async () => {
+    spyStartBackgroundTransaction.mockRestore();
+    spyNoticeError.mockRestore();
   });
 
   describe('given a lambda that executes successfully', () => {
-    let spyStartBackgroundTransaction;
-    beforeEach(async () => {
-      spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
-    });
-
-    afterEach(async () => {
-      spyStartBackgroundTransaction.mockRestore();
-    });
-
+  
     test('should run successfully with response', async () => {
-      const response = await helloSuccess({});
-      expect(response).toMatchSnapshot();
+      results = await helloSuccess({});
+      expect(result).toMatchSnapshot();
     });
 
     test('should call "startBackgroundTransaction" ', async () => {
-      const results = await helloSuccess({});
+      results = await helloSuccess({});
       expect(spyStartBackgroundTransaction).toHaveBeenCalled();
     });
   });
 
   describe('given a lambda that executes with an exception', () => {
-    let spyNoticeError;
-
-    beforeEach(async () => {
-      spyNoticeError = jest.spyOn(newrelic, 'noticeError');
-    });
-
-    afterEach(async () => {
-      spyNoticeError.mockRestore();
-    });
-
+  
     test('should execute and throw an exception', async () => {
       let err;
 
       try {
-        await helloError();
+        results = await helloError();
       } catch (error) {
         err = error;
       }
@@ -56,7 +49,7 @@ describe('NewRelic Lambda', () => {
       let err;
 
       try {
-        await helloError();
+        results = await helloError();
       } catch (error) {
         err = error;
       }

@@ -12,7 +12,7 @@
     "serve": "sls offline -P 4000",
     "serve:watch": "nodemon -e js,ts,jsx,tsx -x yarn serve",
     "tail:hello": "sls logs --function hello --tail",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --verbose ./src || true",
     "test:watch": "jest --watch",
     "build": "sls webpack",
     "watch:hello": "sls invoke local --watch --function hello --path fixtures/event.json"
