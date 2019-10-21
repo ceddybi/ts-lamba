@@ -1,10 +1,10 @@
 import { NewLambdaHandler } from './utils/newrelic-lambda';
 const { runNewRelicInTheBackground } = NewLambdaHandler;
 
-const helloTsError: Function = async (args: any): Promise<any> => {
-  console.log('args', JSON.stringify(args))
+export const TEST_ERROR_TEXT = "TEST_ERROR";
 
-  const er = new Error("Error with unsent");
+const helloTsError: Function = async (): Promise<any> => {
+  const er = new Error(TEST_ERROR_TEXT);
   return Promise.reject(er);
 };
 

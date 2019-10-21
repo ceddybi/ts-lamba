@@ -1,4 +1,4 @@
-import helloError from './hello-ts-error';
+import helloError, { TEST_ERROR_TEXT } from './hello-error';
 import helloSuccess from './hello-success';
 import newrelic from 'newrelic';
 
@@ -49,7 +49,7 @@ describe('NewRelic Lambda', () => {
         err = error;
       }
 
-      expect(err.message).toEqual("Error with unsent");
+      expect(err.message).toEqual(TEST_ERROR_TEXT);
 
     });
 
