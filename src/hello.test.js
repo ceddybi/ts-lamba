@@ -1,9 +1,8 @@
+import newrelic from 'newrelic';
 import helloError, { TEST_ERROR_TEXT } from './hello-error';
 import helloSuccess from './hello-success';
-import newrelic from 'newrelic';
 
 describe('NewRelic Lambda', () => {
-
   describe('given a lambda that executes successfully', () => {
     let spyStartBackgroundTransaction;
     beforeEach(async () => {
@@ -23,11 +22,9 @@ describe('NewRelic Lambda', () => {
       await helloSuccess({});
       expect(spyStartBackgroundTransaction).toHaveBeenCalled();
     });
-
   });
 
   describe('given a lambda that executes with an exception', () => {
-
     let spyNoticeError;
 
     beforeEach(async () => {
@@ -39,35 +36,27 @@ describe('NewRelic Lambda', () => {
     });
 
     it('should execute and throw an exception', async () => {
-      let response;
       let err;
 
       try {
-        response = await helloError();
-      }
-      catch (error) {
+        await helloError();
+      } catch (error) {
         err = error;
       }
 
       expect(err.message).toEqual(TEST_ERROR_TEXT);
-
     });
 
     it('should call "noticeError" when an exception occurs', async () => {
-      let response;
       let err;
 
       try {
-        response = await helloError();
-      }
-      catch (error) {
+        await helloError();
+      } catch (error) {
         err = error;
       }
 
       expect(spyNoticeError).toHaveBeenCalled();
-
     });
-
   });
-
 });
