@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Lambda 000'],
+  app_name: ['NewRelic Lambda app'],
   /**
    * Your New Relic license key.
    */
@@ -20,7 +20,7 @@ exports.config = {
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: process.env.NODE_ENV === "production"? 'info' : 'trace'
+    level: 'info'
   },
   /**
    * When true, all request headers except for those listed in attributes.exclude

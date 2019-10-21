@@ -5,39 +5,37 @@ import helloSuccess from './hello-success';
 describe('NewRelic Lambda', () => {
 
   let spyStartBackgroundTransaction;
-  let spyNoticeError;
   let results;
 
-  beforeEach(async () => {
-    spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
-    spyNoticeError = jest.spyOn(newrelic, 'noticeError');
-  });
+  // describe('given a lambda that executes successfully', () => {
 
-  afterEach(async () => {
-    spyStartBackgroundTransaction.mockRestore();
-    spyNoticeError.mockRestore();
-  });
+  //   beforeEach(async () => {
+  //     spyStartBackgroundTransaction = jest.spyOn(newrelic, 'startBackgroundTransaction');
+  //   });
 
-  describe('given a lambda that executes successfully', () => {
-  
-    test('should run successfully with response', async () => {
-      results = await helloSuccess({});
-      expect(results).toMatchSnapshot();
-    });
+  //   afterEach(async () => {
+  //     spyStartBackgroundTransaction.mockRestore();
+  //   });
 
-    test('should call "startBackgroundTransaction" ', async () => {
-      results = await helloSuccess({});
-      expect(spyStartBackgroundTransaction).toHaveBeenCalled();
-    });
-  });
+  //   test('should run successfully with response', async () => {
+  //     results = await helloSuccess({});
+  //     expect(results).toMatchSnapshot();
+  //   });
+
+  //   test('should call "startBackgroundTransaction" ', async () => {
+  //     results = await helloSuccess({});
+  //     expect(spyStartBackgroundTransaction).toHaveBeenCalledTimes(1);
+  //   });
+  // });
 
   describe('given a lambda that executes with an exception', () => {
-  
+
     test('should execute and throw an exception', async () => {
       let err;
 
       try {
         results = await helloError();
+        console.log('results from error', results)
       } catch (error) {
         err = error;
       }
@@ -54,7 +52,7 @@ describe('NewRelic Lambda', () => {
         err = error;
       }
 
-      expect(spyNoticeError).toHaveBeenCalled();
+      expect(spyNoticeError).toHaveBeenCalledTimes(1);
     });
   });
 });

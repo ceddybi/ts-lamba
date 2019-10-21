@@ -64,3 +64,9 @@ export function corsSuccessResponse(json: IJSON) {
     allowCORS: true,
   });
 }
+
+export function delayExecution(t: number, v: any): Promise<any> {
+  return new Promise(function(resolve) { 
+      setTimeout(resolve.bind(null, v), t)
+  });
+}

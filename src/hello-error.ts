@@ -1,4 +1,4 @@
-import { NewLambdaHandler } from './utils/newrelic-lambda';
+import NewLambdaHandler from './utils/NewrelicLambda';
 
 const { runNewRelicInTheBackground } = NewLambdaHandler;
 

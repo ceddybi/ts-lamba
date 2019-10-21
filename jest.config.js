@@ -6,6 +6,5 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  testEnvironment: "node",
-  clearMocks: true
+  testEnvironment: "node"
 };
