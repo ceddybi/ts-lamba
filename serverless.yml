@@ -78,17 +78,17 @@ custom:
 #    - exclude-me-dir/**
 
 functions:
-  hello-typescript:
-    handler: src/hello-ts.default
-    events:
-      - http:
-          path: hello-typescript
-          method: get
   hello:
-    handler: src/hello.default
+    handler: src/hello-success.default
     events:
       - http:
-          path: hello
+          path: hello-success
+          method: get
+  hello-error:
+    handler: src/hello-error.default
+    events:
+      - http:
+          path: hello-error
           method: get
 
 #    The following are a few example events you can configure

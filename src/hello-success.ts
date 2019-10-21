@@ -1,5 +1,6 @@
 import { successResponse } from './utils';
 import { NewLambdaHandler } from './utils/newrelic-lambda';
+
 const { runNewRelicInTheBackground } = NewLambdaHandler;
 
 const helloSuccess: Function = async (event: any): Promise<any> => successResponse({
